@@ -20,7 +20,10 @@
 - Testing utama berupa manual verification checklist.
 - Jika memakai TDD, batasi hanya untuk `TaskModel` dan `TaskProvider`; jangan wajibkan Firebase emulator.
 - Shell commands in this workspace must be prefixed with `rtk`.
-- This workspace is currently not a git repository. Commit steps are included for normal repo usage; skip them unless `rtk git rev-parse --is-inside-work-tree` succeeds.
+- This workspace is a git repository.
+- Implementation must run on branch `implement/simple-task-tracker`.
+- Each task must create a commit after its verification commands pass.
+- Do not continue to the next task with uncommitted changes.
 
 ---
 
@@ -203,17 +206,9 @@ rtk flutter test
 
 Expected: both commands pass.
 
-- [ ] **Step 9: Commit if this is a git repository**
+- [ ] **Step 9: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-Expected in the current workspace: FAIL because this folder is not a git repository.
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add pubspec.yaml pubspec.lock lib/main.dart lib/app.dart lib/firebase_options.dart web
@@ -492,15 +487,9 @@ rtk flutter analyze
 
 Expected: PASS.
 
-- [ ] **Step 6: Commit if this is a git repository**
+- [ ] **Step 6: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/features/tasks/models/task_model.dart test/features/tasks/models/task_model_test.dart
@@ -623,15 +612,9 @@ rtk flutter analyze
 
 Expected: PASS.
 
-- [ ] **Step 3: Commit if this is a git repository**
+- [ ] **Step 3: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/features/tasks/repositories/task_repository.dart
@@ -963,15 +946,9 @@ rtk flutter analyze
 
 Expected: both commands pass.
 
-- [ ] **Step 6: Commit if this is a git repository**
+- [ ] **Step 6: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/features/tasks/providers/task_provider.dart test/features/tasks/providers/task_provider_test.dart
@@ -1039,15 +1016,9 @@ rtk flutter test
 
 Expected: both commands pass.
 
-- [ ] **Step 3: Commit if this is a git repository**
+- [ ] **Step 3: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/app.dart
@@ -1200,15 +1171,9 @@ rtk flutter test
 
 Expected: both commands pass.
 
-- [ ] **Step 7: Commit if this is a git repository**
+- [ ] **Step 7: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/core
@@ -1384,15 +1349,9 @@ rtk flutter test
 
 Expected: both commands pass.
 
-- [ ] **Step 4: Commit if this is a git repository**
+- [ ] **Step 4: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/features/tasks/widgets
@@ -1635,15 +1594,9 @@ rtk flutter test
 
 Expected: both commands pass.
 
-- [ ] **Step 5: Commit if this is a git repository**
+- [ ] **Step 5: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/app.dart lib/features/tasks/views/task_list_page.dart lib/features/tasks/views/task_form_page.dart
@@ -1884,15 +1837,9 @@ rtk flutter test
 
 Expected: both commands pass.
 
-- [ ] **Step 3: Commit if this is a git repository**
+- [ ] **Step 3: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add lib/features/tasks/views/task_form_page.dart
@@ -1979,15 +1926,9 @@ docs/simple-task-tracker-verification.md
 
 Expected: every item in Static Checks and Manual Browser Checks can be checked.
 
-- [ ] **Step 5: Commit if this is a git repository**
+- [ ] **Step 5: Commit this task**
 
 Run:
-
-```powershell
-rtk git rev-parse --is-inside-work-tree
-```
-
-If it prints `true`, run:
 
 ```powershell
 rtk git add docs/simple-task-tracker-verification.md
