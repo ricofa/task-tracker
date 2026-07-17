@@ -169,8 +169,9 @@ class _TaskFormPageState extends State<TaskFormPage> {
     final provider = context.read<TaskProvider>();
     final task = widget.task;
 
+    final bool succeeded;
     if (task == null) {
-      await provider.addTask(
+      succeeded = await provider.addTask(
         title: _titleController.text.trim(),
         description: _descriptionController.text.trim(),
         status: _status,
@@ -178,7 +179,7 @@ class _TaskFormPageState extends State<TaskFormPage> {
         dueDate: _dueDate,
       );
     } else {
-      await provider.updateTask(
+      succeeded = await provider.updateTask(
         task.copyWith(
           title: _titleController.text.trim(),
           description: _descriptionController.text.trim(),
@@ -190,8 +191,19 @@ class _TaskFormPageState extends State<TaskFormPage> {
       );
     }
 
-    if (mounted) {
-      Navigator.of(context).pop();
+    if (!mounted) {
+      return;
     }
+
+    if (succeeded) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(provider.errorMessage ?? 'Failed to save task'),
+      ),
+    );
   }
 }

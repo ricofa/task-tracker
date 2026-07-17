@@ -38,14 +38,14 @@ class TaskProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> addTask({
+  Future<bool> addTask({
     required String title,
     required String description,
     required TaskStatus status,
     required TaskPriority priority,
     DateTime? dueDate,
   }) async {
-    await _runWithLoading(
+    return _runWithLoading(
       failureMessage: 'Failed to add task',
       action: () async {
         await _repository.addTask(
@@ -60,8 +60,8 @@ class TaskProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> updateTask(TaskModel task) async {
-    await _runWithLoading(
+  Future<bool> updateTask(TaskModel task) async {
+    return _runWithLoading(
       failureMessage: 'Failed to update task',
       action: () async {
         await _repository.updateTask(task);
@@ -70,8 +70,8 @@ class TaskProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> deleteTask(String id) async {
-    await _runWithLoading(
+  Future<bool> deleteTask(String id) async {
+    return _runWithLoading(
       failureMessage: 'Failed to delete task',
       action: () async {
         await _repository.deleteTask(id);
@@ -80,8 +80,8 @@ class TaskProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> changeStatus(TaskModel task, TaskStatus status) async {
-    await updateTask(task.copyWith(status: status));
+  Future<bool> changeStatus(TaskModel task, TaskStatus status) async {
+    return updateTask(task.copyWith(status: status));
   }
 
   void setFilterStatus(TaskStatus? status) {
@@ -89,7 +89,7 @@ class TaskProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> _runWithLoading({
+  Future<bool> _runWithLoading({
     required String failureMessage,
     required Future<void> Function() action,
   }) async {
@@ -99,8 +99,10 @@ class TaskProvider extends ChangeNotifier {
 
     try {
       await action();
+      return true;
     } catch (_) {
       _errorMessage = failureMessage;
+      return false;
     } finally {
       _isLoading = false;
       notifyListeners();
