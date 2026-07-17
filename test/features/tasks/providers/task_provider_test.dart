@@ -40,14 +40,16 @@ void main() {
       expect(provider.filteredTasks.single.title, 'Done');
     });
 
-    test('stores errorMessage when repository fails', () async {
+    test('stores errorMessage with failure detail when repository fails',
+        () async {
       final repository = FakeTaskRepository(shouldThrowOnLoad: true);
       final provider = TaskProvider(repository: repository);
 
       await provider.loadTasks();
 
       expect(provider.isLoading, isFalse);
-      expect(provider.errorMessage, 'Failed to load tasks');
+      expect(provider.errorMessage, contains('Failed to load tasks'));
+      expect(provider.errorMessage, contains('Exception: Repository failed'));
       expect(provider.tasks, isEmpty);
     });
 
@@ -67,7 +69,8 @@ void main() {
       expect(provider.tasks.map((task) => task.title), ['New task']);
     });
 
-    test('addTask returns false and stores errorMessage when add fails', () async {
+    test('addTask returns false and stores detailed errorMessage when add fails',
+        () async {
       final repository = FakeTaskRepository(shouldThrowOnMutation: true);
       final provider = TaskProvider(repository: repository);
 
@@ -81,12 +84,14 @@ void main() {
 
       expect(succeeded, isFalse);
       expect(provider.isLoading, isFalse);
-      expect(provider.errorMessage, 'Failed to add task');
+      expect(provider.errorMessage, contains('Failed to add task'));
+      expect(provider.errorMessage, contains('Exception: Repository failed'));
       expect(provider.tasks, isEmpty);
     });
 
-    test('updateTask returns false and stores errorMessage when update fails',
-        () async {
+    test(
+      'updateTask returns false and stores detailed errorMessage when update fails',
+      () async {
       final task = makeTask(id: 'task-1', title: 'Original');
       final repository = FakeTaskRepository(
         initialTasks: [task],
@@ -100,9 +105,11 @@ void main() {
 
       expect(succeeded, isFalse);
       expect(provider.isLoading, isFalse);
-      expect(provider.errorMessage, 'Failed to update task');
+      expect(provider.errorMessage, contains('Failed to update task'));
+      expect(provider.errorMessage, contains('Exception: Repository failed'));
       expect(provider.tasks, isEmpty);
-    });
+      },
+    );
   });
 }
 

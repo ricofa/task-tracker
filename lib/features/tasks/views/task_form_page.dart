@@ -23,6 +23,7 @@ class _TaskFormPageState extends State<TaskFormPage> {
   late TaskStatus _status;
   late TaskPriority _priority;
   DateTime? _dueDate;
+  bool _isSubmitting = false;
 
   bool get _isEditing => widget.task != null;
 
@@ -137,8 +138,22 @@ class _TaskFormPageState extends State<TaskFormPage> {
                 ),
               const SizedBox(height: 24),
               FilledButton(
-                onPressed: _submit,
-                child: Text(_isEditing ? 'Save Changes' : 'Add Task'),
+                onPressed: _isSubmitting ? null : _submit,
+                child: _isSubmitting
+                    ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 16,
+                            width: 16,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                          SizedBox(width: 8),
+                          Text('Saving...'),
+                        ],
+                      )
+                    : Text(_isEditing ? 'Save Changes' : 'Add Task'),
               ),
             ],
           ),
@@ -162,9 +177,15 @@ class _TaskFormPageState extends State<TaskFormPage> {
   }
 
   Future<void> _submit() async {
+    if (_isSubmitting) {
+      return;
+    }
+
     if (!_formKey.currentState!.validate()) {
       return;
     }
+
+    setState(() => _isSubmitting = true);
 
     final provider = context.read<TaskProvider>();
     final task = widget.task;
@@ -199,6 +220,8 @@ class _TaskFormPageState extends State<TaskFormPage> {
       Navigator.of(context).pop();
       return;
     }
+
+    setState(() => _isSubmitting = false);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -100,12 +100,21 @@ class TaskProvider extends ChangeNotifier {
     try {
       await action();
       return true;
-    } catch (_) {
-      _errorMessage = failureMessage;
+    } catch (error) {
+      _errorMessage = _formatErrorMessage(failureMessage, error);
       return false;
     } finally {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  String _formatErrorMessage(String failureMessage, Object error) {
+    final detail = error.toString();
+    if (detail.isEmpty) {
+      return failureMessage;
+    }
+
+    return '$failureMessage: $detail';
   }
 }
