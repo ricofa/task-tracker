@@ -1,1 +1,17 @@
-{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"tracker-under-pro","configurations":{"web":"1:250177578974:web:47b556e6a0942b424f9f4f"}}}}}}
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "tracker-under-pro",
+          "configurations": {
+            "web": "1:250177578974:web:47b556e6a0942b424f9f4f"
+          }
+        }
+      }
+    }
+  }
+}
